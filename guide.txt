@@ -1,0 +1,25 @@
+So in theApp I added a templates directory (folder) and a static directory from the 2nd vid
+
+Signing back into the virtual environment
+
+C:\Users\quinc\Desktop\Django(prac)>cd myapp/Scripts
+
+C:\Users\quinc\Desktop\Django(prac)\myapp\Scripts>activate
+
+(myapp) C:\Users\quinc\Desktop\Django(prac)\myapp\Scripts>cd Django(prac)
+The system cannot find the path specified.
+
+(myapp) C:\Users\quinc\Desktop\Django(prac)\myapp\Scripts>cd C:\Users\quinc\Desktop\Django(prac)
+
+(myapp) C:\Users\quinc\Desktop\Django(prac)>
+
+Running the server
+(myapp) C:\Users\quinc\Desktop\Django(prac)\myproject>python manage.py runserver
+
+Made an admin-
+	Username = admin
+	Password = 123
+
+For the database
+python manage.py makemigrations
+python manage.py migrate
