@@ -1,6 +1,7 @@
 from django.shortcuts import get_object_or_404, render, redirect
-from django.contrib.auth import login #idk if this should be signup
+from django.contrib.auth import login, logout #idk if this should be signup
 from django.contrib.auth.decorators import login_required
+from django.views.decorators.http import require_POST
 from .forms import SignUpForm, EventForm
 from django.http import HttpResponse
 from django.contrib.auth.models import User, auth
@@ -58,13 +59,15 @@ def loginView(request):#login page
             return redirect ('login')
     else:
         return render(request, 'login.html')
-    
+
+
 def logoutView(request):#not hooked up to anything since I don't think we've speciefed needing one.
     #Still, this should be the logic
-    auth.logout(request)
-    return redirect('')
+    logout(request)
+    messages.success(request, "You have been logged out.")
+    return redirect('index')
 
-@login_required(redirect_field_name="login")#idk about this
+@login_required(login_url='/login/')
 def courses(request):#displays the available courses- Functions are Enroll, Filter(i'd like to remove this), and Search
     query = request.GET.get('q', '')  # Get the search query
     if query:
@@ -96,7 +99,7 @@ def events(request):#displays events- Allows admins to create events (students c
         return render(request, "events.html", {"events": events})
 
 
-@login_required
+@login_required(login_url='/login/')
 def register_event(request, event_id):
     events = get_object_or_404(Event, id=event_id)
     if request.user in events.registered_users.all():
@@ -110,7 +113,7 @@ def register_event(request, event_id):
     return redirect('events')
 
 
-@login_required
+@login_required(login_url='/login/')
 def create_event(request):
     if request.method == "POST":
         form = EventForm(request.POST)
@@ -123,16 +126,13 @@ def create_event(request):
         form = EventForm()
     return render(request, "events/create_event.html", {"form": form})
 
-
+@login_required(login_url='/login/')
 def settings_page(request):#The admin dashboard- Allows Users, Courses, and Events to be added(removed as well?)
-    if request.user.is_authenticated:#can't I just use this for login?
-        messages.error(request, "You must login before viewing the settings page.")
-        return redirect('login')#sends them back to the landing page
-    
+
     if not request.user.is_staff:#can't I just use this for login?
         messages.error(request, "You do not have permission for this page, sorry.")
-        return redirect('index')#sends them back to the landing page
-
+        return redirect('login')#sends them back to the landing page
+    
     users = User.objects.all()
     courses = Course.objects.all()
     events = Event.objects.all()
@@ -162,7 +162,7 @@ def settings_page(request):#The admin dashboard- Allows Users, Courses, and Even
     })
 
 
-@login_required
+@login_required(login_url='/login/')
 def delete_user(request, user_id):
     if not request.user.is_staff:
         messages.error(request, "Unauthorized access.")
@@ -181,7 +181,7 @@ def delete_user(request, user_id):
     
     return redirect('settings')
 
-@login_required
+@login_required(login_url='/login/')
 def delete_course(request, course_id):
     if not request.user.is_staff:
         messages.error(request, "Unauthorized.")
@@ -193,7 +193,7 @@ def delete_course(request, course_id):
     
     return redirect('settings')
 
-@login_required
+@login_required(login_url='/login/')
 def delete_event(request, event_id):
     if not request.user.is_staff:
         messages.error(request, "Unauthorized.")

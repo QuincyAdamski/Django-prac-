@@ -10,6 +10,7 @@ urlpatterns = [
     path('signup/', views.signup, name='signup'), #this will path to the sign up page (account creation)
     #path('login', views.login, name='login'),#paths to the login page
     path('login/', views.loginView, name='login'),
+    path('logout/', views.logoutView, name='logout'),
     path('courses/', views.courses, name='courses'),
     path('enroll/<int:course_id>/', views.enroll_course, name='enroll_course'),
     path('events/', views.events, name='events'),

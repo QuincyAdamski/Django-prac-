@@ -23,3 +23,12 @@ Made an admin-
 For the database
 python manage.py makemigrations
 python manage.py migrate
+
+    if request.user.is_authenticated:#can't I just use this for login?
+        messages.error(request, "You must login before viewing the settings page.")
+        return redirect('login')#sends them back to the landing page
+
+    
+    if not request.user.is_staff:#can't I just use this for login?
+        messages.error(request, "You do not have permission for this page, sorry.")
+        return redirect('index')#sends them back to the landing page
