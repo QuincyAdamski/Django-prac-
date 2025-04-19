@@ -211,7 +211,7 @@ def delete_event(request, event_id):
 
 
 class CalendarView(generic.ListView):
-    model = Event
+    model = EventTwo
     template_name = 'cal/calendar.html'
 
     def get_context_data(self, **kwargs):

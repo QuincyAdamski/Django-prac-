@@ -1,4 +1,5 @@
 from django.urls import path, include
+#from django.conf.urls import url
 from . import views
 from theApp import views #from the second vid
 from .views import enroll_course
@@ -21,6 +22,7 @@ urlpatterns = [
     path('delete_event/<int:event_id>/', views.delete_event, name='delete_event'),#in the settings page
     #path('calendar/', views.calendar_view, name='calendar'),
     path('calendar/', views.CalendarView.as_view(), name='calendar'), #for the calandar from the blog
+    #url(r'^calendar/$', views.CalendarView.as_view(), name='calendar'),
 
 
 ]

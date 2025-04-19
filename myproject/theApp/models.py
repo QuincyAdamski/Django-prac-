@@ -34,3 +34,11 @@ class Event(models.Model):
     def __str__(self):
         return self.title
     
+class EventTwo(models.Model):
+    title = models.CharField(max_length=200)
+    description = models.TextField()
+    start_time = models.DateTimeField()
+    end_time = models.DateTimeField()
+
+    
+    
