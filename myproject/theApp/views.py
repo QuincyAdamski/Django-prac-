@@ -8,7 +8,11 @@ from django.contrib.auth.models import User, auth
 from django.contrib import messages
 from .models import Feature, Course, Event
 from .forms import CourseForm, EventForm
-from datetime import date
+from datetime import date, datetime
+from django.views import generic
+from django.utils.safestring import mark_safe
+from .models import *
+from .utils import Calendar
 
 # Create your views here.
 def index(request):
@@ -205,19 +209,29 @@ def delete_event(request, event_id):
 
     return redirect('settings')
 
-def calendar_view(request):#A callender with registered events displayed on the side
-    today = date.today()
-    current_month = today.month
-    current_year = today.year
 
-    context = {
-        'current_month' : current_month,
-        'current_year' : current_year,
-        #'courses' : user_courses,
-        #'events' : upcoming_events
+class CalendarView(generic.ListView):
+    model = Event
+    template_name = 'cal/calendar.html'
 
-    }
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
 
-    return render(request, 'calendar.html', context)
+        # use today's date for the calendar
+        d = get_date(self.request.GET.get('day', None))
+
+        # Instantiate our calendar class with today's year and date
+        cal = Calendar(d.year, d.month)
+
+        # Call the formatmonth method, which returns our calendar as a table
+        html_cal = cal.formatmonth(withyear=True)
+        context['calendar'] = mark_safe(html_cal)
+        return context
+
+def get_date(req_day):
+    if req_day:
+        year, month = (int(x) for x in req_day.split('-'))
+        return date(year, month, day=1)
+    return datetime.today()
 
 

@@ -1,4 +1,5 @@
 import datetime
+from datetime import date, time, datetime
 from django.db import models
 from django.contrib.auth.models import User
 
@@ -22,8 +23,10 @@ class Event(models.Model):
     title = models.CharField(max_length=200)
     description = models.TextField()
     date = models.DateField()
-    start_time = models.TimeField(default=datetime.time(9, 0))  # 09:00 AM
-    end_time = models.TimeField(default=datetime.time(17, 0))   # 05:00 PM
+    #start_time = models.TimeField(default=datetime.time(9, 0))  # 09:00 AM
+    start_time = models.TimeField(default=time(9, 0))
+    #end_time = models.TimeField(default=datetime.time(17, 0))   # 05:00 PM
+    end_time = models.TimeField(default=time(17, 0))
     location = models.CharField(max_length=200, default="Virtual")
     #created_by = models.ForeignKey(User, on_delete=models.CASCADE)
     registered_users = models.ManyToManyField(User, related_name="registered_events", blank=True)

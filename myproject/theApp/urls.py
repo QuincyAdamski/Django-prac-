@@ -19,7 +19,8 @@ urlpatterns = [
     path('delete_user/<int:user_id>/', views.delete_user, name='delete_user'),#in the settings page
     path('delete_course/<int:course_id>/', views.delete_course, name='delete_course'),#in the settings page
     path('delete_event/<int:event_id>/', views.delete_event, name='delete_event'),#in the settings page
-    path('calendar/', views.calendar_view, name='calendar'),
+    #path('calendar/', views.calendar_view, name='calendar'),
+    path('calendar/', views.CalendarView.as_view(), name='calendar'), #for the calandar from the blog
 
 
 ]
