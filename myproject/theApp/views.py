@@ -1,3 +1,4 @@
+import calendar
 from django.shortcuts import get_object_or_404, render, redirect
 from django.contrib.auth import login, logout #idk if this should be signup
 from django.contrib.auth.decorators import login_required
@@ -8,7 +9,7 @@ from django.contrib.auth.models import User, auth
 from django.contrib import messages
 from .models import Feature, Course, Event
 from .forms import CourseForm, EventForm
-from datetime import date, datetime
+from datetime import date, datetime, timedelta
 from django.views import generic
 from django.utils.safestring import mark_safe
 from .models import *
@@ -113,7 +114,7 @@ def register_event(request, event_id):
         events.registered_users.add(request.user)  # Add user to enrolled_users
         #events.students_enrolled += 1 i dont think we need to track this
         events.save()
-        messages.success(request, f"Successfully enrolled in {events.title}!")
+        messages.success(request, f"Successfully registered for {events.title}!")
 
     return redirect('events')
 
@@ -218,8 +219,9 @@ class CalendarView(generic.ListView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
 
+        
         # use today's date for the calendar
-        d = get_date(self.request.GET.get('day', None))
+        d = get_date(self.request.GET.get('month', None))
 
         # Instantiate our calendar class with today's year and date
         cal = Calendar(d.year, d.month)
@@ -227,7 +229,22 @@ class CalendarView(generic.ListView):
         # Call the formatmonth method, which returns our calendar as a table
         html_cal = cal.formatmonth(withyear=True)
         context['calendar'] = mark_safe(html_cal)
+        context['prev_month'] = prev_month(d)
+        context['next_month'] = next_month(d)
         return context
+    
+def prev_month(d):
+    first = d.replace(day=1)
+    prev_month = first - timedelta(days=1)
+    month = 'month=' + str(prev_month.year) + '-' + str(prev_month.month)
+    return month
+
+def next_month(d):
+    days_in_month = calendar.monthrange(d.year, d.month)[1]
+    last = d.replace(day=days_in_month)
+    next_month = last + timedelta(days=1)
+    month = 'month=' + str(next_month.year) + '-' + str(next_month.month)
+    return month
 
 def get_date(req_day):
     if req_day:
