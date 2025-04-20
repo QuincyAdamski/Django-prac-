@@ -13,6 +13,7 @@ from django.views import generic
 from django.utils.safestring import mark_safe
 from .models import *
 from .utils import Calendar
+from django.utils.timezone import now
 
 # Create your views here.
 def index(request):
@@ -99,7 +100,7 @@ def enroll_course(request, course_id):
 @login_required(login_url='/login/')
 def events(request):#displays events- Allows admins to create events (students can make meetings? I maybe missremembering)
     #and allows Registration for events
-        events = Event.objects.all().order_by('date')
+        events = Event.objects.filter(start_time__gte=now()).order_by('start_time')
         return render(request, "events.html", {"events": events})
 
 
@@ -211,7 +212,7 @@ def delete_event(request, event_id):
 
 
 class CalendarView(generic.ListView):
-    model = EventTwo
+    model = Event
     template_name = 'cal/calendar.html'
 
     def get_context_data(self, **kwargs):

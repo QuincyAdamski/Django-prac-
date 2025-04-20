@@ -19,4 +19,4 @@ class CourseForm(forms.ModelForm):
 class EventForm(forms.ModelForm):
     class Meta:
         model = Event
-        fields = ["title", "description", "date", "start_time", "end_time", "location"]
+        fields = ["title", "description", "start_time", "end_time", "location"]
