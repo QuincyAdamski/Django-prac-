@@ -1,0 +1,25 @@
+Content-Type: text/plain; charset="utf-8"
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
+Subject: Password reset on 127.0.0.1:8000
+From: webmaster@localhost
+To: quincyla9@gmail.com
+Date: Wed, 23 Apr 2025 15:46:46 -0000
+Message-ID: <174542320640.52672.9788562923371837214@DESKTOP-LNIBSLJ>
+
+
+You're receiving this email because you requested a password reset for your user account at 127.0.0.1:8000.
+
+Please go to the following page and choose a new password:
+
+http://127.0.0.1:8000/password_reset_confirm/Nw/copndy-e5cc9a5aa6016d19b719c24d7cb034a9/
+
+Your username, in case you’ve forgotten: Quincy
+
+Thanks for using our site!
+
+The 127.0.0.1:8000 team
+
+
+
+-------------------------------------------------------------------------------

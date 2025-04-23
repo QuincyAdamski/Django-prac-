@@ -18,6 +18,15 @@ LOGIN_URL = '/login/'#idk if this is needed
 LOGIN_REDIRECT_URL = '/login/'#i have no clue
 
 
+EMAIL_BACKEND = 'django.core.mail.backends.filebased.EmailBackend'
+EMAIL_FILE_PATH = BASE_DIR / "emails"
+#EMAIL_HOST = 'smtp.gmail.com'
+#EMAIL_HOST_PORT = 25 #idk if this is the correct port
+#EMAIL_USE_TLS = True
+#EMAIL_HOST_USER = 'dinklink985@gmail.com'
+#EMAIL_HOST_PASSWORD = 'email password'
+
+
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/5.1/howto/deployment/checklist/
 
@@ -127,5 +136,4 @@ STATIC_ROOT = BASE_DIR / 'static'#from the second vid
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 

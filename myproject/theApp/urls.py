@@ -3,6 +3,8 @@ from django.urls import path, include
 from . import views
 from theApp import views #from the second vid
 from .views import enroll_course
+from django.contrib import admin
+from django.contrib.auth import views as auth_views
 
 urlpatterns = [
     path('', views.index, name='index'),
@@ -22,8 +24,8 @@ urlpatterns = [
     path('delete_event/<int:event_id>/', views.delete_event, name='delete_event'),#in the settings page
     path('calendar/', views.CalendarView.as_view(), name='calendar'), #for the calandar from the blog
     #the password reset pages
-    #path('password-reset/', PasswordResetView.as_view(template_name='users/password_reset.html'),name='password-reset'),
-    #path('password-reset/done/', PasswordResetDoneView.as_view(template_name='users/password_reset_done.html'),name='password_reset_done'),
-    #path('password-reset-confirm/<uidb64>/<token>/', PasswordResetConfirmView.as_view(template_name='users/password_reset_confirm.html'),name='password_reset_confirm'),
-    #path('password-reset-complete/',PasswordResetCompleteView.as_view(template_name='users/password_reset_complete.html'),name='password_reset_complete'),
+    path('password_reset/', auth_views.PasswordResetView.as_view(),name='password_reset'),
+    path('password_reset_done/', auth_views.PasswordResetDoneView.as_view(),name='password_reset_done'),
+    path('password_reset_confirm/<uidb64>/<token>/', auth_views.PasswordResetConfirmView.as_view(),name='password_reset_confirm'),
+    path('password_reset_complete/', auth_views.PasswordResetCompleteView.as_view(),name='password_reset_complete'),
 ]
